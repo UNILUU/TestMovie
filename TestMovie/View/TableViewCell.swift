@@ -53,10 +53,13 @@ class TableViewCell: UITableViewCell {
             movieImageView.trailingAnchor.constraint(equalTo: textStackView.leadingAnchor, constant: -8),
             movieImageView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 8),
             movieImageView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 8),
-            movieImageView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -8),
             textStackView.centerYAnchor.constraint(equalTo: movieImageView.centerYAnchor),
             textStackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -8),
             ])
+        
+        let constraint = movieImageView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -8)
+        constraint.priority = .defaultHigh
+        constraint.isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {

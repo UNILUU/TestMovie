@@ -86,14 +86,18 @@ class DataManager{
                 self?.movieList += response.results
                 self?.currentPage = response.page
                 self?.totalPage = response.total_pages
-                 DispatchQueue.main.async {
+                DispatchQueue.main.async {
                     self?.delegate?.dataDidChange()
                 }
             }
         }
     }
     
-    func cancelTask(imageString : String){
-        netWorkManager.cancelTask(imageString: imageString)
+    func cancelTask(at index: Int){
+        guard movieList.count > index else { return }
+        
+        if let path = movieList[index].poster_path{
+            netWorkManager.cancelTask(imageString: path)
+        }
     }
 }

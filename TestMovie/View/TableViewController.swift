@@ -8,8 +8,19 @@
 import UIKit
 
 class TableViewController: UITableViewController {
+    let noDataLabel : UILabel = {
+        let label = UILabel()
+        label.text = "No movie available"
+        label.textColor  = UIColor.lightGray
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.textAlignment = .center
+        return label
+    }()
+    
     let dataManager = DataManager.shared
     let searchController = UISearchController(searchResultsController: nil)
+    var text: String?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,18 +28,27 @@ class TableViewController: UITableViewController {
         tableView.register(TableViewCell.self, forCellReuseIdentifier: "movieCell")
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 200;
+        tableView.backgroundView  = noDataLabel
         
         dataManager.loadInitData()
         dataManager.delegate = self
         searchController.searchBar.delegate = self
         searchController.searchBar.placeholder = "Search Movie"
-        searchController.searchBar.tintColor = UIColor.white
+        searchController.searchBar.text = dataManager.searchString
+        self.navigationItem.hidesSearchBarWhenScrolling = false
         self.navigationItem.searchController = searchController
     }
     
     
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if dataManager.movieList.count > 0{
+            tableView.backgroundView?.isHidden = true
+//            tableView.separatorStyle  = .singleLine
+        }else{
+            tableView.backgroundView?.isHidden = false
+            tableView.separatorStyle  = .none
+        }
         return dataManager.movieList.count
     }
     
@@ -73,9 +93,7 @@ class TableViewController: UITableViewController {
 //    }
     
     override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let path = dataManager.movieList[indexPath.row].poster_path {
-            dataManager.cancelTask(imageString: path)
-        }
+        dataManager.cancelTask(at: indexPath.row)
     }
     
     
@@ -97,9 +115,23 @@ extension TableViewController : UISearchBarDelegate{
         searchController.dismiss(animated: true, completion: nil)
     }
     
-    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
-        dataManager.searchString = searchBar.text
-        return true
+    
+    public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        let pretext = searchBar.text
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            if searchBar.text == pretext{
+                self.dataManager.searchString = pretext
+            }
+        }
+    }
+//    
+//    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
+//        dataManager.searchString = searchBar.text
+//        return true
+//    }
+    
+    public func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        return
     }
 }
 
