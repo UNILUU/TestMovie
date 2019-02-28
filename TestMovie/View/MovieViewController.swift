@@ -41,18 +41,25 @@ class MovieViewController: UIViewController {
     }()
     let detailLabel : UILabel = {
         let label = UILabel()
+        label.textAlignment = .center
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 14)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    //    let scrollView: UIScrollView = {
-    //        let v = UIScrollView()
-    //        v.translatesAutoresizingMaskIntoConstraints = false
-    //        v.backgroundColor = UIColor.white
-    //        return v
-    //    }()
+    let scrollView: UIScrollView = {
+        let view = UIScrollView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor.white
+        return view
+    }()
+    let contentView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor.clear
+        return view
+    }()
     
     let movie : Movie
     let manager : DataManager
@@ -70,38 +77,52 @@ class MovieViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
         edgesForExtendedLayout = []
-        //        view.addSubview(scrollView)
-        //        NSLayoutConstraint.activate([
-        //            scrollView.leftAnchor.constraint(equalTo: view.leftAnchor),
-        //            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
-        //            scrollView.rightAnchor.constraint(equalTo: view.rightAnchor),
-        //            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-        //        ])
         
+        //set up scroll view
+        view.addSubview(scrollView)
+        NSLayoutConstraint.activate([
+            scrollView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            ])
+        scrollView.addSubview(contentView)
+        NSLayoutConstraint.activate([
+            scrollView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+            scrollView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            scrollView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            ])
+        
+        
+        // set up text view and image
         let textStackView = UIStackView(arrangedSubviews: [titleLabel, voteLabel, dateLabel])
         textStackView.axis = .vertical
         textStackView.alignment = .center
         textStackView.distribution = .fill
         textStackView.spacing = 8
         textStackView.translatesAutoresizingMaskIntoConstraints = false
-        
-        view.addSubview(textStackView)
-        view.addSubview(movieImageView)
-        view.addSubview(detailLabel)
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(textStackView)
+        contentView.addSubview(movieImageView)
+        contentView.addSubview(detailLabel)
         NSLayoutConstraint.activate([
-            movieImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 8),
-            movieImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 8),
-            textStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
-            textStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
+            movieImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            movieImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 8),
+            textStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
+            textStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
             movieImageView.bottomAnchor.constraint(equalTo: textStackView.topAnchor, constant: -20),
-            detailLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
-            detailLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
+            detailLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
+            detailLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
             detailLabel.topAnchor.constraint(equalTo: textStackView.bottomAnchor, constant: 10),
+            contentView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1),
+            detailLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10)
             ])
-        setUp()
+        
+        setUpData()
     }
     
-    private func setUp(){
+    private func setUpData(){
         titleLabel.text = movie.title
         detailLabel.text = movie.overview
         voteLabel.text = String("Vote ❤️: \(movie.vote_count)")
@@ -113,8 +134,5 @@ class MovieViewController: UIViewController {
                 }
             }
         }
-        
     }
-    
-    
 }
