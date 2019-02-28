@@ -2,7 +2,7 @@
 //  MovieViewController.swift
 //  TestMovie
 //
-//  Created by  on 2/27/19.
+//  Created by Xiaolu on 2/27/19.
 //
 
 import UIKit

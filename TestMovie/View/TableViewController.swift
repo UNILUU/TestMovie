@@ -2,7 +2,7 @@
 //  TableViewController.swift
 //  TestMoview
 //
-//  Created by  on 2/25/19.
+//  Created by Xiaolu on 2/25/19.
 //
 
 import UIKit
@@ -23,7 +23,6 @@ class TableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        tableView.allowsSelection = false
         tableView.register(TableViewCell.self, forCellReuseIdentifier: "movieCell")
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 200;
@@ -79,6 +78,8 @@ class TableViewController: UITableViewController {
         let viewController = MovieViewController(self.dataManager.movieList[indexPath.row], self.dataManager)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
+    
+    //MARK : - Incremental loading
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offseY = scrollView.contentOffset.y
         let contentH = scrollView.contentSize.height
@@ -98,7 +99,6 @@ extension TableViewController : UISearchBarDelegate{
         searchController.dismiss(animated: true, completion: nil)
     }
     
-    
     public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         let pretext = searchBar.text
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
@@ -109,7 +109,7 @@ extension TableViewController : UISearchBarDelegate{
         }
     }
     func scrollToFirstRow() {
-        self.tableView.setContentOffset(CGPoint(x : 0, y: self.tableView.contentInset.top), animated: true)
+        self.tableView.setContentOffset(CGPoint(x : 0, y: -140), animated: true)
     }
 }
 
@@ -117,9 +117,10 @@ extension TableViewController : UISearchBarDelegate{
 extension TableViewController: DataMangerDelegate{
     func dataDidChange() {
         tableView.backgroundView?.isHidden = dataManager.movieList.count > 0
-//        if dataManager.currentPage == 1 {
-//            self.scrollToFirstRow()
-//        }
         self.tableView.reloadData()
+        if dataManager.currentPage == 1 {
+            self.scrollToFirstRow()
+        }
+        
     }
 }

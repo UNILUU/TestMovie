@@ -2,7 +2,7 @@
 //  TableViewCell.swift
 //  TestMoview
 //
-//  Created by  on 2/25/19.
+//  Created by Xiaolu on 2/25/19.
 //
 
 import UIKit
@@ -36,7 +36,7 @@ class TableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = UIColor(red: 232/255, green: 245/255, blue: 253/255, alpha: 0.8)
+        backgroundColor = UIColor(red: 232/255, green: 245/255, blue: 253/255, alpha: 1)
         
         let textStackView = UIStackView(arrangedSubviews: [titleLabel, detailLabel])
         textStackView.axis = .vertical

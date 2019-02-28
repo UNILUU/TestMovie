@@ -2,7 +2,7 @@
 //  Movie.swift
 //  TestMoview
 //
-//  Created by  on 2/25/19.
+//  Created by Xiaolu on 2/25/19.
 //
 
 import Foundation

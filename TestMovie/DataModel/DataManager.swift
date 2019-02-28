@@ -2,7 +2,7 @@
 //  DataManager.swift
 //  TestMoview
 //
-//  Created by  on 2/25/19.
+//  Created by Xiaolu on 2/25/19.
 //
 
 import Foundation
@@ -46,10 +46,10 @@ class DataManager{
     func loadInitData(){
         currentPage = 0
         netWorkManager.getMovieList(page: currentPage + 1, searchString: searchString) { [weak self](result) in
-            if case let .success(res) = result, let response = res {
-                self?.movieList = response.results
-                self?.currentPage = response.page
-                self?.totalPage = response.total_pages
+            if case let .success(res) = result, let response = res, let self = self {
+                self.movieList = response.results
+                self.currentPage = response.page
+                self.totalPage = response.total_pages
             }
             DispatchQueue.main.async {
                 self?.delegate?.dataDidChange()
@@ -64,7 +64,6 @@ class DataManager{
             }
             return
         }
-        
         netWorkManager.downloadImage(imageString: imageString) { (result) in
             if case .success(let res) = result, let image = res{
                 self.cache.setObject(image, forKey: imageString as NSString)
@@ -80,12 +79,12 @@ class DataManager{
             return
         }
         netWorkManager.getMovieList(page: currentPage + 1 , searchString: searchString) { [weak self] (result) in
-            if case .success(let res) = result, let response = res {
-                self?.movieList += response.results
-                self?.currentPage = response.page
-                self?.totalPage = response.total_pages
+            if case .success(let res) = result, let response = res , let self = self {
+                self.movieList += response.results
+                self.currentPage = response.page
+                self.totalPage = response.total_pages
                 DispatchQueue.main.async {
-                    self?.delegate?.dataDidChange()
+                    self.delegate?.dataDidChange()
                 }
             }
         }
