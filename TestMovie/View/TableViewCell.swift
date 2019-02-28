@@ -69,6 +69,8 @@ class TableViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         movieImageView.image = UIImage(named: "Image")
+        titleLabel.text = nil
+        detailLabel.text = nil
     }
     
 }

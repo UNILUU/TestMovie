@@ -80,17 +80,18 @@ class MovieViewController: UIViewController {
         
         //set up scroll view
         view.addSubview(scrollView)
+        let safeArea = view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
-            scrollView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
-            scrollView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
+            scrollView.topAnchor.constraint(equalTo: safeArea.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor),
             ])
         scrollView.addSubview(contentView)
         NSLayoutConstraint.activate([
-            scrollView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             scrollView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            scrollView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             ])
         
@@ -115,7 +116,7 @@ class MovieViewController: UIViewController {
             detailLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
             detailLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
             detailLabel.topAnchor.constraint(equalTo: textStackView.bottomAnchor, constant: 10),
-            contentView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1),
+            contentView.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 1),
             detailLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10)
             ])
         
