@@ -91,7 +91,6 @@ class TableViewController: UITableViewController {
 }
 
 
-
 // MARK: - UISearchBarDelegate
 extension TableViewController : UISearchBarDelegate{
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -109,7 +108,7 @@ extension TableViewController : UISearchBarDelegate{
         }
     }
     func scrollToFirstRow() {
-        self.tableView.setContentOffset(CGPoint(x : 0, y: -140), animated: true)
+        self.tableView.setContentOffset(CGPoint(x : 0, y: 0), animated: true)
     }
 }
 
@@ -118,9 +117,8 @@ extension TableViewController: DataMangerDelegate{
     func dataDidChange() {
         tableView.backgroundView?.isHidden = dataManager.movieList.count > 0
         self.tableView.reloadData()
-        if dataManager.currentPage == 1 {
-            self.scrollToFirstRow()
-        }
-        
+//        if dataManager.currentPage == 1 {
+//            self.scrollToFirstRow()
+//        }
     }
 }
