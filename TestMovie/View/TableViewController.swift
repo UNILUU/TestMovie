@@ -87,7 +87,6 @@ class TableViewController: UITableViewController {
             dataManager.loadMoreMovie()
         }
     }
-    
 }
 
 
