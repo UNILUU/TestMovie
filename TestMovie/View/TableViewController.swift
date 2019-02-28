@@ -23,7 +23,7 @@ class TableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.allowsSelection = false
+//        tableView.allowsSelection = false
         tableView.register(TableViewCell.self, forCellReuseIdentifier: "movieCell")
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 200;
@@ -69,11 +69,16 @@ class TableViewController: UITableViewController {
             }
         }
     }
-
+    
+    //MARK : - Table view delegate
     override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         dataManager.cancelTask(at: indexPath.row)
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let viewController = MovieViewController(self.dataManager.movieList[indexPath.row], self.dataManager)
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offseY = scrollView.contentOffset.y
         let contentH = scrollView.contentSize.height
@@ -81,6 +86,7 @@ class TableViewController: UITableViewController {
             dataManager.loadMoreMovie()
         }
     }
+    
 }
 
 
@@ -98,16 +104,22 @@ extension TableViewController : UISearchBarDelegate{
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             if searchBar.text == pretext{
                 self.dataManager.searchString = pretext
+                
             }
         }
     }
-
+    func scrollToFirstRow() {
+        self.tableView.setContentOffset(CGPoint(x : 0, y: self.tableView.contentInset.top), animated: true)
+    }
 }
 
 // MARK: - DataManager delegate
 extension TableViewController: DataMangerDelegate{
     func dataDidChange() {
         tableView.backgroundView?.isHidden = dataManager.movieList.count > 0
+//        if dataManager.currentPage == 1 {
+//            self.scrollToFirstRow()
+//        }
         self.tableView.reloadData()
     }
 }

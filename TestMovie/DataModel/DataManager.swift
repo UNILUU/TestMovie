@@ -22,7 +22,7 @@ class DataManager{
     static let shared = DataManager()
     private let cache = NSCache<NSString, UIImage>()
     private var dict = [String: URLSessionDataTask]()
-    private var currentPage : Int
+    private(set) var currentPage : Int
     weak var delegate : DataMangerDelegate?
     
     var searchString : String? {

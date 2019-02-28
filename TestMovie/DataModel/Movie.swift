@@ -19,4 +19,7 @@ struct Movie : Decodable {
     let title : String
     let poster_path : String?
     let overview : String
+    let vote_average: Double
+    let vote_count : Int
+    let release_date : String
 }
