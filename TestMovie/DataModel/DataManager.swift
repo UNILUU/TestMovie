@@ -8,7 +8,6 @@
 import Foundation
 import UIKit
 
-
 enum Result<T> {
     case success(T?)
     case failure
@@ -25,7 +24,6 @@ class DataManager{
     private var dict = [String: URLSessionDataTask]()
     private var currentPage : Int
     weak var delegate : DataMangerDelegate?
-    
     
     var searchString : String? {
         didSet{
@@ -95,7 +93,6 @@ class DataManager{
     
     func cancelTask(at index: Int){
         guard movieList.count > index else { return }
-        
         if let path = movieList[index].poster_path{
             netWorkManager.cancelTask(imageString: path)
         }

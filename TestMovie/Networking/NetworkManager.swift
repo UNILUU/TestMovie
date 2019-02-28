@@ -8,8 +8,6 @@
 import Foundation
 import UIKit
 
-
-
 class NetworkManager {
     private let session = URLSession.shared
     static let shared = NetworkManager()
@@ -19,7 +17,7 @@ class NetworkManager {
     }
     
     func getMovieList(page: Int, searchString: String?, compeltion: @escaping(Result<MovieResponse>) -> Void){
-        let search = searchString?.addingPercentEncoding(withAllowedCharacters:NSCharacterSet.urlQueryAllowed) ?? "harry"
+        let search = searchString?.addingPercentEncoding(withAllowedCharacters:NSCharacterSet.urlQueryAllowed) ?? ""
         let urlPath = "https://api.themoviedb.org/3/search/movie?api_key=2a61185ef6a27f400fd92820ad9e8537&query=\(search)&page=\(page)"
         guard let url = URL(string: urlPath) else {
             compeltion(Result.failure)
@@ -63,6 +61,4 @@ class NetworkManager {
             dict[imageString] = nil
         }
     }
-    
-
 }

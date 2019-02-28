@@ -19,7 +19,6 @@ class TableViewController: UITableViewController {
     
     let dataManager = DataManager.shared
     let searchController = UISearchController(searchResultsController: nil)
-    var text: String?
     
     
     override func viewDidLoad() {
@@ -29,6 +28,8 @@ class TableViewController: UITableViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 200;
         tableView.backgroundView  = noDataLabel
+        tableView.tableFooterView = UIView()
+        tableView.backgroundView?.isHidden = true
         
         dataManager.loadInitData()
         dataManager.delegate = self
@@ -42,13 +43,6 @@ class TableViewController: UITableViewController {
     
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if dataManager.movieList.count > 0{
-            tableView.backgroundView?.isHidden = true
-//            tableView.separatorStyle  = .singleLine
-        }else{
-            tableView.backgroundView?.isHidden = false
-            tableView.separatorStyle  = .none
-        }
         return dataManager.movieList.count
     }
     
@@ -75,27 +69,10 @@ class TableViewController: UITableViewController {
             }
         }
     }
-    
-    
-    
-//    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-//        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 100))
-//        let label = UILabel()
-//        label.text = "no more movie"
-//        label.textColor = UIColor.gray
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        footerView.addSubview(label)
-//        NSLayoutConstraint .activate([
-//            label.centerXAnchor.constraint(equalTo: footerView.centerXAnchor),
-//            label.centerYAnchor.constraint(equalTo: footerView.centerYAnchor)
-//            ])
-//        return footerView
-//    }
-    
+
     override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         dataManager.cancelTask(at: indexPath.row)
     }
-    
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offseY = scrollView.contentOffset.y
@@ -124,20 +101,13 @@ extension TableViewController : UISearchBarDelegate{
             }
         }
     }
-//    
-//    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
-//        dataManager.searchString = searchBar.text
-//        return true
-//    }
-    
-    public func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        return
-    }
+
 }
 
 // MARK: - DataManager delegate
 extension TableViewController: DataMangerDelegate{
     func dataDidChange() {
+        tableView.backgroundView?.isHidden = dataManager.movieList.count > 0
         self.tableView.reloadData()
     }
 }
