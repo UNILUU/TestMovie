@@ -121,16 +121,16 @@ class MovieViewController: UIViewController {
             introLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10)
             ])
         
-        setUpData()
+        setUpView()
     }
     
-    private func setUpData(){
+    private func setUpView(){
         titleLabel.text = movie.movieTitle
         introLabel.text = movie.introduction
         voteLabel.text = movie.voteMessage
         dateLabel.text = movie.releaseMessage
         if let imagepath = movie.imageURL{
-            manager.getImage(imageString: imagepath) { [weak self](result) in
+            manager.getImage(imageURL: imagepath) { [weak self](result) in
                 if case .success(let image) = result {
                     self?.movieImageView.image = image
                 }

@@ -8,11 +8,11 @@
 import XCTest
 @testable import TestMovie
 class TestNetwork: XCTestCase {
-    var networkManager: NetworkManager!
+    var listLoader: MovieListLoader!
     var sessionUnderTest: URLSession!
     
     override func setUp() {
-        networkManager = NetworkManager.shared
+        listLoader = MovieListLoader.shared
         
         let testBundle = Bundle(for: type(of: self))
         let path = testBundle.path(forResource: "movie", ofType: "json")
@@ -22,7 +22,7 @@ class TestNetwork: XCTestCase {
         let urlResponse = HTTPURLResponse(url: url!, statusCode: 200, httpVersion: nil, headerFields: nil)
 
         let sessionMock = URLSessionMock(data: data, response: urlResponse, error: nil)
-        networkManager.session = sessionMock
+        listLoader.session = sessionMock
     }
     
     override func tearDown() {
@@ -33,9 +33,7 @@ class TestNetwork: XCTestCase {
     
     // Fake URLSession with MovieURLSession protocol and stubs
     func test_MovieSearchResults_ParsesData() {
-        XCTAssertEqual(networkManager?.dict.count, 0, "searchResults should be empty before the data task runs")
-        
-        networkManager.getMovieList(page: 1, searchString: "Harry") { (result) in
+        listLoader.getMovieList(page: 1, searchString: "Harry") { (result) in
             if case let .success(res) = result, let response = res{
                 XCTAssertEqual(response.results.count, 3, "Didn't parse 3 movie from fake response")
                 XCTAssertEqual(response.page, 1, "Didn't get page 1 from face response")

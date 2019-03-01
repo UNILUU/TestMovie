@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MovieResponse : Decodable {
+struct GetListResponse : Decodable {
     let page : Int
     let total_results : Int
     let total_pages : Int

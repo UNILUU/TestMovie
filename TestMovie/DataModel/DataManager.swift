@@ -24,6 +24,10 @@ class DataManager{
     private var dict = [String: URLSessionDataTask]()
     private(set) var currentPage : Int
     weak var delegate : DataMangerDelegate?
+    private var totalPage : Int?
+    private let movieListLoader : MovieListLoader
+    private let imageLoader : ImageLoader
+    var movieList : [Movie]
     
     var searchString : String? {
         didSet{
@@ -32,12 +36,9 @@ class DataManager{
             }
         }
     }
-    private var totalPage : Int?
-    private let netWorkManager : NetworkManager
-    var movieList : [Movie]
-    
     private init(){
-        netWorkManager = NetworkManager.shared
+        movieListLoader = MovieListLoader.shared
+        imageLoader = ImageLoader.shared
         movieList = [Movie]()
         currentPage = 0
         searchString = "harry potter"
@@ -45,7 +46,7 @@ class DataManager{
     
     func loadInitData(){
         currentPage = 0
-        netWorkManager.getMovieList(page: currentPage + 1, searchString: searchString) { [weak self](result) in
+        movieListLoader.getMovieList(page: currentPage + 1, searchString: searchString) { [weak self](result) in
             if case let .success(res) = result, let response = res, let self = self {
                 self.movieList = response.results
                 self.currentPage = response.page
@@ -57,16 +58,16 @@ class DataManager{
         }
     }
     
-    func getImage(imageString: String, completion: @escaping (_ result: Result<UIImage> ) -> ()){
-        if let image = cache.object(forKey: imageString as NSString){
+    func getImage(imageURL: String, completion: @escaping (_ result: Result<UIImage> ) -> ()){
+        if let image = cache.object(forKey: imageURL as NSString){
             DispatchQueue.main.async {
                 completion(Result.success(image))
             }
             return
         }
-        netWorkManager.downloadImage(imageString: imageString) { (result) in
+        imageLoader.downloadImage(imageURL: imageURL) { (result) in
             if case .success(let res) = result, let image = res{
-                self.cache.setObject(image, forKey: imageString as NSString)
+                self.cache.setObject(image, forKey: imageURL as NSString)
                 DispatchQueue.main.async {
                     completion(Result.success(image))
                 }
@@ -78,7 +79,7 @@ class DataManager{
         guard let totalPage = totalPage , currentPage < totalPage else {
             return
         }
-        netWorkManager.getMovieList(page: currentPage + 1 , searchString: searchString) { [weak self] (result) in
+        movieListLoader.getMovieList(page: currentPage + 1 , searchString: searchString) { [weak self] (result) in
             if case .success(let res) = result, let response = res , let self = self {
                 self.movieList += response.results
                 self.currentPage = response.page
@@ -93,7 +94,7 @@ class DataManager{
     func cancelTask(at index: Int){
         guard movieList.count > index else { return }
         if let path = movieList[index].poster_path{
-            netWorkManager.cancelTask(imageString: path)
+            imageLoader.cancelTask(imageURL: path)
         }
     }
     

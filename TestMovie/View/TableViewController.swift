@@ -58,7 +58,7 @@ class TableViewController: UITableViewController {
             tableCell.titleLabel.text = data.movieTitle
             tableCell.detailLabel.text = data.introduction
             if let imagepath = data.imageURL{
-                dataManager.getImage(imageString: imagepath) { (result) in
+                dataManager.getImage(imageURL: imagepath) { (result) in
                     if case .success(let image) = result {
                         if let tableCell = tableView.cellForRow(at: indexPath) as? TableViewCell{
                             tableCell.movieImageView.image = image
