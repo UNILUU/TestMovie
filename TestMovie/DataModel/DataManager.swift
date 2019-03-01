@@ -14,7 +14,7 @@ enum Result<T> {
 }
 
 protocol DataMangerDelegate : class{
-    func dataDidChange()
+    func dataDidChange(_ isLoadMore : Bool)
 }
 
 
@@ -52,7 +52,7 @@ class DataManager{
                 self.totalPage = response.total_pages
             }
             DispatchQueue.main.async {
-                self?.delegate?.dataDidChange()
+                self?.delegate?.dataDidChange(false)
             }
         }
     }
@@ -84,7 +84,7 @@ class DataManager{
                 self.currentPage = response.page
                 self.totalPage = response.total_pages
                 DispatchQueue.main.async {
-                    self.delegate?.dataDidChange()
+                    self.delegate?.dataDidChange(true)
                 }
             }
         }

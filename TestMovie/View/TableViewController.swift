@@ -106,18 +106,16 @@ extension TableViewController : UISearchBarDelegate{
             }
         }
     }
-    func scrollToFirstRow() {
-        self.tableView.setContentOffset(CGPoint(x : 0, y: 0), animated: true)
+    func scrollToTop() {
+        self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
     }
 }
 
 // MARK: - DataManager delegate
 extension TableViewController: DataMangerDelegate{
-    func dataDidChange() {
+    func dataDidChange(_ isLoadMore : Bool) {
         tableView.backgroundView?.isHidden = dataManager.movieList.count > 0
         self.tableView.reloadData()
-//        if dataManager.currentPage == 1 {
-//            self.scrollToFirstRow()
-//        }
+        if !isLoadMore && dataManager.movieList.count > 0 { self.scrollToTop()}
     }
 }
