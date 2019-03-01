@@ -96,4 +96,9 @@ class DataManager{
             netWorkManager.cancelTask(imageString: path)
         }
     }
+    
+    func getMovieModel(at index:Int) -> MovieModel{
+        assert(movieList.count > index, "movie request not valid")
+        return MovieModel(movie : movieList[index])
+    }
 }

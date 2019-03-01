@@ -39,7 +39,7 @@ class MovieViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    let detailLabel : UILabel = {
+    let introLabel : UILabel = {
         let label = UILabel()
         label.textAlignment = .center
         label.numberOfLines = 0
@@ -61,9 +61,10 @@ class MovieViewController: UIViewController {
         return view
     }()
     
-    let movie : Movie
+    let movie : MovieModel
     let manager : DataManager
-    init(_ movie: Movie, _ dataManger: DataManager) {
+    
+    init(_ movie: MovieModel, _ dataManger: DataManager) {
         self.movie = movie
         self.manager = dataManger
         super.init(nibName: nil, bundle: nil)
@@ -106,29 +107,29 @@ class MovieViewController: UIViewController {
         contentView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(textStackView)
         contentView.addSubview(movieImageView)
-        contentView.addSubview(detailLabel)
+        contentView.addSubview(introLabel)
         NSLayoutConstraint.activate([
             movieImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             movieImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 8),
             textStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
             textStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
             movieImageView.bottomAnchor.constraint(equalTo: textStackView.topAnchor, constant: -20),
-            detailLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
-            detailLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
-            detailLabel.topAnchor.constraint(equalTo: textStackView.bottomAnchor, constant: 10),
+            introLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
+            introLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+            introLabel.topAnchor.constraint(equalTo: textStackView.bottomAnchor, constant: 10),
             contentView.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 1),
-            detailLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10)
+            introLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10)
             ])
         
         setUpData()
     }
     
     private func setUpData(){
-        titleLabel.text = movie.title
-        detailLabel.text = movie.overview
-        voteLabel.text = String("Vote ❤️: \(movie.vote_count)")
-        dateLabel.text = String("Release: \(movie.release_date)")
-        if let imagepath = movie.poster_path{
+        titleLabel.text = movie.movieTitle
+        introLabel.text = movie.introduction
+        voteLabel.text = movie.voteMessage
+        dateLabel.text = movie.releaseMessage
+        if let imagepath = movie.imageURL{
             manager.getImage(imageString: imagepath) { [weak self](result) in
                 if case .success(let image) = result {
                     self?.movieImageView.image = image

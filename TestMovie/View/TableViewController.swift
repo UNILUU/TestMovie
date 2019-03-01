@@ -53,11 +53,11 @@ class TableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let data = dataManager.movieList[indexPath.row]
+        let data = dataManager.getMovieModel(at: indexPath.row)
         if let tableCell = cell as? TableViewCell{
-            tableCell.titleLabel.text = data.title
-            tableCell.detailLabel.text = data.overview
-            if let imagepath = data.poster_path{
+            tableCell.titleLabel.text = data.movieTitle
+            tableCell.detailLabel.text = data.introduction
+            if let imagepath = data.imageURL{
                 dataManager.getImage(imageString: imagepath) { (result) in
                     if case .success(let image) = result {
                         if let tableCell = tableView.cellForRow(at: indexPath) as? TableViewCell{
@@ -75,7 +75,7 @@ class TableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let viewController = MovieViewController(self.dataManager.movieList[indexPath.row], self.dataManager)
+        let viewController = MovieViewController(dataManager.getMovieModel(at: indexPath.row), dataManager)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
