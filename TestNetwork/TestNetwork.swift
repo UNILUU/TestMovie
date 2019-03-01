@@ -8,12 +8,21 @@
 import XCTest
 @testable import TestMovie
 class TestNetwork: XCTestCase {
-
+    var networkManager: NetworkManager!
     var sessionUnderTest: URLSession!
     
     override func setUp() {
-        super.setUp()
-        sessionUnderTest = URLSession(configuration: URLSessionConfiguration.default)
+        networkManager = NetworkManager.shared
+        
+        let testBundle = Bundle(for: type(of: self))
+        let path = testBundle.path(forResource: "movie", ofType: "json")
+        let data = try? Data(contentsOf: URL(fileURLWithPath: path!), options: .alwaysMapped)
+
+        let url = URL(string: "https://api.themoviedb.org/3/search/movie?api_key=2a61185ef6a27f400fd92820ad9e8537&query=Harry&page=1")
+        let urlResponse = HTTPURLResponse(url: url!, statusCode: 200, httpVersion: nil, headerFields: nil)
+
+        let sessionMock = URLSessionMock(data: data, response: urlResponse, error: nil)
+        networkManager.session = sessionMock
     }
     
     override func tearDown() {
@@ -21,32 +30,21 @@ class TestNetwork: XCTestCase {
         super.tearDown()
     }
     
-    // Asynchronous test: success fast, failure slow
-    func testMovieSearch() {
-        let url = URL(string: "https://api.themoviedb.org/3/search/movie?api_key=2a61185ef6a27f400fd92820ad9e8537&query=Harry&page=1")
-        let promise = expectation(description: "Status code: 200")
+    
+    // Fake URLSession with MovieURLSession protocol and stubs
+    func test_MovieSearchResults_ParsesData() {
+        XCTAssertEqual(networkManager?.dict.count, 0, "searchResults should be empty before the data task runs")
         
-        let dataTask = sessionUnderTest.dataTask(with: url!) { data, response, error in
-            if let error = error {
-                XCTFail("Error: \(error.localizedDescription)")
-                return
-            } else if let statusCode = (response as? HTTPURLResponse)?.statusCode {
-                if statusCode == 200 {
-                    promise.fulfill()
-                } else {
-                    XCTFail("Status code: \(statusCode)")
-                }
+        networkManager.getMovieList(page: 1, searchString: "Harry") { (result) in
+            if case let .success(res) = result, let response = res{
+                XCTAssertEqual(response.results.count, 3, "Didn't parse 3 movie from fake response")
+                XCTAssertEqual(response.page, 1, "Didn't get page 1 from face response")
+                XCTAssertEqual(response.total_pages, 2, "Didn't get total page 3 from face response")
+            }else{
+                XCTFail("Fack response fails to parse")
             }
         }
-        dataTask.resume()
-        waitForExpectations(timeout: 5, handler: nil)
     }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-
+    
+    
 }

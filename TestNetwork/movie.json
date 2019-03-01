@@ -1,0 +1,65 @@
+{"page":1,
+"total_results":28,
+"total_pages":2,
+"results":[
+    {
+        "vote_count":11001,
+        "id":672,
+        "video":false,
+        "vote_average":7.7,
+        "title":"Harry Potter and the Chamber of Secrets",
+        "popularity":47.304,
+        "poster_path":"\/sdEOH0992YZ0QSxgXNIGLq1ToUi.jpg",
+        "original_language":"en",
+        "original_title":"Harry Potter and the Chamber of Secrets",
+        "genre_ids":[
+            12,
+            14,
+            10751
+        ],
+        "backdrop_path":"\/avqzwKn89VetTEvAlBePt3Us6Al.jpg",
+        "adult":false,
+        "overview":"Ignoring threats to his life, Harry returns to Hogwarts to investigate – aided by Ron and Hermione – a mysterious series of attacks.",
+        "release_date":"2002-11-13"
+    },
+    {
+        "vote_count":13022,
+        "id":671,
+        "video":false,
+        "vote_average":7.8,
+        "title":"Harry Potter and the Philosopher's Stone",
+        "popularity":43.982,
+        "poster_path":"\/dCtFvscYcXQKTNvyyaQr2g2UacJ.jpg",
+        "original_language":"en",
+        "original_title":"Harry Potter and the Philosopher's Stone",
+        "genre_ids":[
+            12,
+            14,
+            10751
+        ],
+        "backdrop_path":"\/hziiv14OpD73u9gAak4XDDfBKa2.jpg",
+        "adult":false,
+        "overview":"Harry Potter has lived under the stairs at his aunt and uncle's house his whole life. But on his 11th birthday, he learns he's a powerful wizard -- with a place waiting for him at the Hogwarts School of Witchcraft and Wizardry. As he learns to harness his newfound powers with the help of the school's kindly headmaster, Harry uncovers the truth about his parents' deaths -- and about the villain who's to blame.",
+        "release_date":"2001-11-16"
+    },
+    {
+        "vote_count":10385,
+        "id":674,
+        "video":false,
+        "vote_average":7.7,
+        "title":"Harry Potter and the Goblet of Fire",
+        "popularity":33.569,
+        "poster_path":"\/6sASqcdrEHXxUhA3nFpjrRecPD2.jpg",
+        "original_language":"en",
+        "original_title":"Harry Potter and the Goblet of Fire",
+        "genre_ids":[
+            12,
+            14,
+            10751
+        ],
+        "backdrop_path":"\/gzKW3emulMxIHzuXxZoyDB1lei9.jpg",
+        "adult":false,
+        "overview":"Harry starts his fourth year at Hogwarts, competes in the treacherous Triwizard Tournament and faces the evil Lord Voldemort. Ron and Hermione help Harry manage the pressure – but Voldemort lurks, awaiting his chance to destroy Harry and all that he stands for.",
+        "release_date":"2005-11-16"
+        }
+]}

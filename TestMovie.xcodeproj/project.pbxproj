@@ -10,6 +10,8 @@
 		152B58A92228D628001C3709 /* MovieDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152B58A82228D628001C3709 /* MovieDataModel.swift */; };
 		152B58B32228DEC6001C3709 /* TestMovieModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152B58B22228DEC6001C3709 /* TestMovieModel.swift */; };
 		152B58C12228E15C001C3709 /* TestNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152B58C02228E15C001C3709 /* TestNetwork.swift */; };
+		152B58CA2228F2A4001C3709 /* URLSessionMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152B58C92228F2A4001C3709 /* URLSessionMock.swift */; };
+		152B58CC2228F921001C3709 /* movie.json in Resources */ = {isa = PBXBuildFile; fileRef = 152B58CB2228F921001C3709 /* movie.json */; };
 		157DF3E02224DE8100704623 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157DF3DF2224DE8100704623 /* AppDelegate.swift */; };
 		157DF3E52224DE8100704623 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 157DF3E32224DE8100704623 /* Main.storyboard */; };
 		157DF3E72224DE8200704623 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 157DF3E62224DE8200704623 /* Assets.xcassets */; };
@@ -47,6 +49,8 @@
 		152B58BE2228E15C001C3709 /* TestNetwork.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestNetwork.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		152B58C02228E15C001C3709 /* TestNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestNetwork.swift; sourceTree = "<group>"; };
 		152B58C22228E15C001C3709 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		152B58C92228F2A4001C3709 /* URLSessionMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionMock.swift; sourceTree = "<group>"; };
+		152B58CB2228F921001C3709 /* movie.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = movie.json; sourceTree = "<group>"; };
 		157DF3DC2224DE8000704623 /* TestMovie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestMovie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		157DF3DF2224DE8100704623 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		157DF3E42224DE8100704623 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -100,8 +104,17 @@
 			children = (
 				152B58C02228E15C001C3709 /* TestNetwork.swift */,
 				152B58C22228E15C001C3709 /* Info.plist */,
+				152B58CB2228F921001C3709 /* movie.json */,
 			);
 			path = TestNetwork;
+			sourceTree = "<group>";
+		};
+		152B58C82228F276001C3709 /* Supporting File */ = {
+			isa = PBXGroup;
+			children = (
+				152B58C92228F2A4001C3709 /* URLSessionMock.swift */,
+			);
+			path = "Supporting File";
 			sourceTree = "<group>";
 		};
 		157DF3D32224DE8000704623 = {
@@ -135,6 +148,7 @@
 				157DF3E62224DE8200704623 /* Assets.xcassets */,
 				157DF3E82224DE8200704623 /* LaunchScreen.storyboard */,
 				157DF3EB2224DE8200704623 /* Info.plist */,
+				152B58C82228F276001C3709 /* Supporting File */,
 			);
 			path = TestMovie;
 			sourceTree = "<group>";
@@ -277,6 +291,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				152B58CC2228F921001C3709 /* movie.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -316,6 +331,7 @@
 				157DF3F72224E58200704623 /* TableViewCell.swift in Sources */,
 				15A8FED5222775DB00C2F6D8 /* MovieViewController.swift in Sources */,
 				152B58A92228D628001C3709 /* MovieDataModel.swift in Sources */,
+				152B58CA2228F2A4001C3709 /* URLSessionMock.swift in Sources */,
 				157DF3FF222501C800704623 /* DataManager.swift in Sources */,
 				157DF3E02224DE8100704623 /* AppDelegate.swift in Sources */,
 				157DF3FD2224F7AF00704623 /* NetworkManager.swift in Sources */,

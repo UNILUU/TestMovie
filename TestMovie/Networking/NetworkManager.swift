@@ -10,7 +10,7 @@ import UIKit
 typealias resCompletion = (Result<UIImage>) -> ()
 
 class NetworkManager {
-    private let session = URLSession.shared
+    var session : MovieURLSession = URLSession.shared
     static let shared = NetworkManager()
     var dict = [String: URLSessionDataTask]()
     var completionDict = [String : [resCompletion]]()
